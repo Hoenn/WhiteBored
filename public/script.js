@@ -11,6 +11,7 @@ $('form').submit(function(){
     direction: randomDir(),
     img: true,
     src: msg,
+    ypos: randomY(),
     speed: randomSpeed()
   });
 
@@ -21,6 +22,7 @@ $('form').submit(function(){
       text: $('#m').val(),
       direction: randomDir(),
       img: false,
+      ypos: randomY(),
       speed: randomSpeed()
     });
   }
@@ -32,11 +34,18 @@ $('form').submit(function(){
 //Need to replace deprecated marquee tag with JQuery solution
 socket.on('new message', function(data){
   console.log(data);
+  console.log(data.ypos);
   if(data.img){
-    $('#messages').append($('<marquee loop="1" behavior="scroll" direction="'+data.direction+'"" scrollamount="'+data.speed+'">').append('<img src="'+data.src+'"" width="100" height="100" alt="badlink">'));
+    $('body').append($('<marquee loop="1" behavior="scroll" direction="'+data.direction+'"" scrollamount="'+data.speed+'">').append('<img src="'+data.src+'"" width="100" height="100" alt="badlink">').css({
+      'position': 'absolute',
+      'top':Math.max(0,data.ypos-100)+'px', //temp hard code
+    }));
   }
   else {
-    $('#messages').append($('<marquee loop="1" behavior="scroll" direction="'+data.direction+'"" scrollamount="'+data.speed+'">').text(data.text));  
+    $('body').append($('<marquee loop="1" behavior="scroll" direction="'+data.direction+'"" scrollamount="'+data.speed+'">').text(data.text).css({
+      'position': 'absolute',
+      'top':Math.max(0,data.ypos-16)+'px', //temp hard code
+    }));  
   }
   
 });
@@ -51,4 +60,10 @@ function randomDir(){
 
 function randomSpeed(){
   return Math.floor(Math.random()*30 + 5);
+}
+
+function randomY(){
+  console.log($(document).height())
+  console.log($('#userForm').height());
+  return (Math.random() * ($(document).height()-$('#userForm').height())).toFixed();
 }
