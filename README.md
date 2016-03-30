@@ -1,3 +1,3 @@
 # WhiteBored
-A chat application
+A chat application made with socket.io[http://socket.io/]
  
