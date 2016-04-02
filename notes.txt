@@ -1,11 +1,9 @@
 Put this in address bar when testing
 http://localhost:3000/
 
-Need to replace 
-Marquee tag for sliding text
-With some JQuery solution. Not only is the marquee tag deprecated
-but it is pretty limited in features. I'm looking for a solution
-that will allow me to bind on some 'finish' event
+Replace Marquees entirely with fading text
+User clicks a location, its percentage position is 
+sent to clients to display whatever the user types
 
 The best candidate appears to be
 https://github.com/aamirafridi/jQuery.Marquee 
