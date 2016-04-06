@@ -5,8 +5,7 @@ Replace Marquees entirely with fading text
 User clicks a location, its percentage position is 
 sent to clients to display whatever the user types
 
-The best candidate appears to be
-https://github.com/aamirafridi/jQuery.Marquee 
-
-//Temp Image
-http://imgur.com/gallery/ZpWpACb
+UI needs to be updated to be minimalistic,
+User should spawn invisible input when 
+clicking on screen, percentage data is bundled in json
+then served to clients.
