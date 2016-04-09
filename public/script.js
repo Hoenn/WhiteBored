@@ -8,11 +8,9 @@ $('form').submit(function(){
     msg = msg.substring(4);
     socket.emit('new message', {
     text: $('#m').val(),
-    direction: randomDir(),
-    img: true,
     src: msg,
     ypos: randomY(),
-    speed: randomSpeed()
+    xpos: randomX()
   });
 
 
@@ -20,10 +18,8 @@ $('form').submit(function(){
   else {
     socket.emit('new message', {
       text: $('#m').val(),
-      direction: randomDir(),
-      img: false,
       ypos: randomY(),
-      speed: randomSpeed()
+      xpos: randomX()
     });
   }
   $('#m').val('');
@@ -31,21 +27,39 @@ $('form').submit(function(){
   
 });
 
-//Need to replace deprecated marquee tag with JQuery solution
 socket.on('new message', function(data){
   console.log(data);
+  console.log(data.xpos);
   console.log(data.ypos);
-  if(data.img){
-    $('body').append($('<marquee loop="1" behavior="scroll" direction="'+data.direction+'"" scrollamount="'+data.speed+'">').append('<img src="'+data.src+'"" width="100" height="100" alt="badlink">').css({
+  if(data.hasOwnProperty('src')){
+    $('body').append($('<div>').append('<img src="'+data.src+'"" width="100" height="100" alt="badlink">').css({
       'position': 'absolute',
-      'top':Math.max(0,data.ypos-100)+'px', //temp hard code
-    }));
+      'top': Math.max(0,data.ypos-100)+'px', //temp hard code
+      'left': Math.max(0,data.xpos-100)+'px'
+    }).hide().fadeIn(500, function() {
+      var self = this;
+      setTimeout(function(){
+          $(self).fadeOut(500, function(){
+          $(self).remove();
+        });
+      }, 1000); 
+    })
+    ); 
   }
   else {
-    $('body').append($('<marquee loop="1" behavior="scroll" direction="'+data.direction+'"" scrollamount="'+data.speed+'">').text(data.text).css({
+    $('body').append($('<div>').text(data.text).css({
       'position': 'absolute',
-      'top':Math.max(0,data.ypos-16)+'px', //temp hard code
-    }));  
+      'top': Math.max(0,data.ypos-16)+'px', //temp hard code
+      'left': Math.max(0,data.xpos-100)+'px'
+    }).hide().fadeIn(500, function() {
+      var self = this;
+      setTimeout(function(){
+          $(self).fadeOut(500, function(){
+          $(self).remove();
+        });
+      }, 1000); 
+    })
+    ); 
   }
   
 });
@@ -54,16 +68,12 @@ socket.on('users changed', function(numUsers){
   $('#userCount').text("Users: "+numUsers);
 });
 
-function randomDir(){
-  return Math.random() < 0.5 ? 'left' : 'right';
-}
-
-function randomSpeed(){
-  return Math.floor(Math.random()*30 + 5);
-}
-
 function randomY(){
-  console.log($(document).height())
+  console.log($(document).height());
   console.log($('#userForm').height());
   return (Math.random() * ($(document).height()-$('#userForm').height())).toFixed();
+}
+
+function randomX() {
+  return (Math.random()*($(document).width())).toFixed();
 }
