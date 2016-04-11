@@ -32,34 +32,10 @@ socket.on('new message', function(data){
   console.log(data.xpos);
   console.log(data.ypos);
   if(data.hasOwnProperty('src')){
-    $('body').append($('<div>').append('<img src="'+data.src+'"" width="100" height="100" alt="badlink">').css({
-      'position': 'absolute',
-      'top': Math.max(0,data.ypos-100)+'px', //temp hard code
-      'left': Math.max(0,data.xpos-100)+'px'
-    }).hide().fadeIn(500, function() {
-      var self = this;
-      setTimeout(function(){
-          $(self).fadeOut(500, function(){
-          $(self).remove();
-        });
-      }, 1000); 
-    })
-    ); 
+    addNewImageMessage(data);
   }
   else {
-    $('body').append($('<div>').text(data.text).css({
-      'position': 'absolute',
-      'top': Math.max(0,data.ypos-16)+'px', //temp hard code
-      'left': Math.max(0,data.xpos-100)+'px'
-    }).hide().fadeIn(500, function() {
-      var self = this;
-      setTimeout(function(){
-          $(self).fadeOut(500, function(){
-          $(self).remove();
-        });
-      }, 1000); 
-    })
-    ); 
+    addNewTextMessage(data);
   }
   
 });
@@ -76,4 +52,45 @@ function randomY(){
 
 function randomX() {
   return (Math.random()*($(document).width())).toFixed();
+}
+
+function imgError(image) {
+  image.onerror="";
+  image.src= "noimage.jpg";
+  return true;
+}
+
+function addNewImageMessage(data) {
+  $('body').append($('<div>').append($('<img src="'+data.src+'"" width="100" height="100" alt="badlink">').attr("onerror", function() {   
+      this.onerror=null;
+      this.src="noImage.jpg";
+    })).css({
+      'position': 'absolute',
+      'top': Math.max(0,data.ypos-100)+'px', //temp hard code
+      'left': Math.max(0,data.xpos-100)+'px'
+    }).hide().fadeIn(500, function() {
+      var self = this;
+      setTimeout(function(){
+          $(self).fadeOut(500, function(){
+          $(self).remove();
+        });
+      }, 1000); 
+    })
+    ); 
+}
+
+function addNewTextMessage(data) {
+  $('body').append($('<div>').text(data.text).css({
+      'position': 'absolute',
+      'top': Math.max(0,data.ypos-16)+'px', //temp hard code
+      'left': Math.max(0,data.xpos-100)+'px'
+    }).hide().fadeIn(500, function() {
+      var self = this;
+      setTimeout(function(){
+          $(self).fadeOut(500, function(){
+          $(self).remove();
+        });
+      }, 1000); 
+    })
+    ); 
 }

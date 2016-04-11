@@ -1,11 +1,8 @@
 Put this in address bar when testing
 http://localhost:3000/
 
-Replace Marquees entirely with fading text
-User clicks a location, its percentage position is 
-sent to clients to display whatever the user types
-
 UI needs to be updated to be minimalistic,
 User should spawn invisible input when 
-clicking on screen, percentage data is bundled in json
+clicking on screen
+Percentage data is bundled in json
 then served to clients.
