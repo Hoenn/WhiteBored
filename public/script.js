@@ -76,7 +76,7 @@ function addNewImageMessage(data) {
         });
       }, 1000); 
     })
-    ); 
+  ); 
 }
 
 function addNewTextMessage(data) {
@@ -92,5 +92,5 @@ function addNewTextMessage(data) {
         });
       }, 1000); 
     })
-    ); 
+  ); 
 }
