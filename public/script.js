@@ -54,16 +54,10 @@ function randomX() {
   return (Math.random()*($(document).width())).toFixed();
 }
 
-function imgError(image) {
-  image.onerror="";
-  image.src= "noimage.jpg";
-  return true;
-}
-
 function addNewImageMessage(data) {
-  $('body').append($('<div>').append($('<img src="'+data.src+'"" width="100" height="100" alt="badlink">').attr("onerror", function() {   
+  $('body').append($('<div>').append($('<img src="'+data.src+'"" width="100" height="100" alt="badlink">').on('error', function() {   
       this.onerror=null;
-      this.src="noImage.jpg";
+      this.src="noImage.gif";
     })).css({
       'position': 'absolute',
       'top': Math.max(0,data.ypos-100)+'px', //temp hard code
