@@ -70,14 +70,8 @@ function addNewImageMessage(data) {
     'left': Math.max(0, data.xpos-100)+'px'
   })
   //Hide element and set up fadeIn, wait, fadeOut
-  newImageMessage.hide().fadeIn(500, function(){
-    var self = this;
-    setTimeout(function() {
-      $(self).fadeOut(500, function() {
-        $(self).remove();
-      });
-    }, 1000);
-  });
+  //Add Effect: FadeIn, FadeOut, Remove Self
+  addEtherealEffect(newImageMessage);
   //Add image to container
   newImageMessageContainer.append(newImageMessage);
   //Add container to body
@@ -93,15 +87,23 @@ function addNewTextMessage(data) {
     'top': Math.max(0, data.ypos-16)+'px',
     'left': Math.max(0, data.xpos-100)+'px'
   });
-  //Hide element and set up fadeIn, wait, fadeOut
-  newTextMessage.hide().fadeIn(500, function() {
-    var self = this;
-    setTimeout(function() {
-      $(self).fadeOut(500, function() {
-        $(self).remove();
-      })
-    }, 1000);
-  });
+  //Add Effect: FadeIn, FadeOut, Remove Self
+  addEtherealEffect(newTextMessage);
   //Add message to body
   $('body').append(newTextMessage);
+}
+
+//Hides element, fadeIn -> wait -> (fadeOut -> remove)
+var fadeDur = 500;
+var stayDur = 1000;
+function addEtherealEffect(element) {
+  element.hide().fadeIn(fadeDur, function() {
+    //Store scope
+    var self = this;
+    setTimeout(function() {
+      $(self).fadeOut(fadeDur, function() {
+        $(self).remove();
+      })
+    }, stayDur);
+  });
 }
