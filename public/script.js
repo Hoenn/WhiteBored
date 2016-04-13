@@ -55,36 +55,53 @@ function randomX() {
 }
 
 function addNewImageMessage(data) {
-  $('body').append($('<div>').append($('<img src="'+data.src+'"" width="100" height="100" alt="badlink">').on('error', function() {   
-      this.onerror=null;
-      this.src="noImage.gif";
-    })).css({
-      'position': 'absolute',
-      'top': Math.max(0,data.ypos-100)+'px', //temp hard code
-      'left': Math.max(0,data.xpos-100)+'px'
-    }).hide().fadeIn(500, function() {
-      var self = this;
-      setTimeout(function(){
-          $(self).fadeOut(500, function(){
-          $(self).remove();
-        });
-      }, 1000); 
-    })
-  ); 
+  var newImageMessageContainer = $('<div>');
+  var newImageMessage = $('<img src="'+data.src+'"" width="100" height="100" alt="badlink">');
+  //Add error handling to replace bad img
+  newImageMessage.on('error', function() {
+    this.onerror = null;
+    this.src = 'noImage.gif';
+  });
+  //Add class to it to give common properties
+  newImageMessage.addClass('img-msg');
+  //Set position 
+  newImageMessage.css({
+    'top': Math.max(0, data.ypos-100)+'px',
+    'left': Math.max(0, data.xpos-100)+'px'
+  })
+  //Hide element and set up fadeIn, wait, fadeOut
+  newImageMessage.hide().fadeIn(500, function(){
+    var self = this;
+    setTimeout(function() {
+      $(self).fadeOut(500, function() {
+        $(self).remove();
+      });
+    }, 1000);
+  });
+  //Add image to container
+  newImageMessageContainer.append(newImageMessage);
+  //Add container to body
+  $('body').append(newImageMessageContainer);
 }
 
 function addNewTextMessage(data) {
-  $('body').append($('<div>').text(data.text).css({
-      'position': 'absolute',
-      'top': Math.max(0,data.ypos-16)+'px', //temp hard code
-      'left': Math.max(0,data.xpos-100)+'px'
-    }).hide().fadeIn(500, function() {
-      var self = this;
-      setTimeout(function(){
-          $(self).fadeOut(500, function(){
-          $(self).remove();
-        });
-      }, 1000); 
-    })
-  ); 
+  var newTextMessage = $('<div>');
+  //Add text, class, custom css
+  newTextMessage.text(data.text);
+  newTextMessage.addClass('txt-msg');
+  newTextMessage.css({
+    'top': Math.max(0, data.ypos-16)+'px',
+    'left': Math.max(0, data.xpos-100)+'px'
+  });
+  //Hide element and set up fadeIn, wait, fadeOut
+  newTextMessage.hide().fadeIn(500, function() {
+    var self = this;
+    setTimeout(function() {
+      $(self).fadeOut(500, function() {
+        $(self).remove();
+      })
+    }, 1000);
+  });
+  //Add message to body
+  $('body').append(newTextMessage);
 }
