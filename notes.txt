@@ -1,8 +1,12 @@
 Put this in address bar when testing
 http://localhost:3000/
 
+Complex newMessage functions need to be broken cleaned up
+for readability
+
 UI needs to be updated to be minimalistic,
 User should spawn invisible input when 
 clicking on screen
+
 Percentage data is bundled in json
 then served to clients.
