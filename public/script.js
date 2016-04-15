@@ -44,6 +44,13 @@ socket.on('users changed', function(numUsers){
   $('#userCount').text("Users: "+numUsers);
 });
 
+$(document).on('click touch', function(e) {
+  //Print coordinates of mouse
+  console.log('mouse x :' + e.pageX + ' mouse y :' + e.pageY);
+  //Print relative percentage coordinates
+  console.log('%x :' +(100 * e.pageX/$(document).width()).toFixed() + ' %y: '+ (100 * e.pageY/$(document).height()).toFixed()); 
+});
+
 function randomY(){
   console.log($(document).height());
   console.log($('#userForm').height());
