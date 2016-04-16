@@ -8,4 +8,5 @@ clicking on screen
 Percentage data is bundled in json
 then served to clients.
 
+Use npm install to install dependencies
  

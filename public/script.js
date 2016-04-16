@@ -2,6 +2,7 @@ var socket = io();
 
 socket.emit('add user', '');
 
+//Listen to submit and generate message
 $('form').submit(function(){
   var msg = $('#m').val();
   if (msg.substring(0,4)=="img:") {
