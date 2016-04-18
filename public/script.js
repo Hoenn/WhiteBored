@@ -2,16 +2,21 @@ var socket = io();
 
 socket.emit('add user', '');
 
+mX = false;
+mY = false;
 //Listen to submit and generate message
 $('form').submit(function(){
+  
   var msg = $('#m').val();
+  if(!mX || !mY || (msg.length <1))
+    return false;
   if (msg.substring(0,4)=="img:") {
     msg = msg.substring(4);
     socket.emit('new message', {
     text: $('#m').val(),
     src: msg,
-    ypos: randomY(),
-    xpos: randomX()
+    ypos: mY,
+    xpos: mX
   });
 
 
@@ -19,19 +24,23 @@ $('form').submit(function(){
   else {
     socket.emit('new message', {
       text: $('#m').val(),
-      ypos: randomY(),
-      xpos: randomX()
+      ypos: mY,
+      xpos: mX
     });
   }
+  //Clear input
   $('#m').val('');
+  mX = false;
+  mY = false;
+  //Set css to not ready
+  $('#send-btn').removeClass('btn-ready');
+  $('#send-btn').addClass('btn-notready');
   return false;
   
 });
 
 socket.on('new message', function(data){
   console.log(data);
-  console.log(data.xpos);
-  console.log(data.ypos);
   if(data.hasOwnProperty('src')){
     addNewImageMessage(data);
   }
@@ -46,20 +55,23 @@ socket.on('users changed', function(numUsers){
 });
 
 $(document).on('click touch', function(e) {
-  //Print coordinates of mouse
-  console.log('mouse x :' + e.pageX + ' mouse y :' + e.pageY);
-  //Print relative percentage coordinates
-  console.log('%x :' +(100 * e.pageX/$(document).width()).toFixed() + ' %y: '+ (100 * e.pageY/$(document).height()).toFixed()); 
+  //Ensure we only modify when event has mouse coordinates
+  if(e.pageX || e.pageY) {
+    mX = (e.pageX/$(document).width()).toFixed(5);
+    mY = (e.pageY/$(document).height()).toFixed(5);
+
+    $('#send-btn').addClass('btn-ready');
+    $('#m').focus();
+  }
+  
 });
 
 function randomY(){
-  console.log($(document).height());
-  console.log($('#userForm').height());
-  return (Math.random() * ($(document).height()-$('#userForm').height())).toFixed();
+  return Math.random().toFixed(5);
 }
 
 function randomX() {
-  return (Math.random()*($(document).width())).toFixed();
+  return Math.random().toFixed(5);
 }
 
 function addNewImageMessage(data) {
@@ -72,10 +84,14 @@ function addNewImageMessage(data) {
   });
   //Add class to it to give common properties
   newImageMessage.addClass('img-msg');
+
   //Set position 
+  var yActual = (data.ypos * $(document).height())- 100;
+  var xActual = (data.xpos * $(document).width()) - 100; //temp hard code offsets
+
   newImageMessage.css({
-    'top': Math.max(0, data.ypos-100)+'px',
-    'left': Math.max(0, data.xpos-100)+'px'
+    'top': Math.max(0, yActual)+'px',
+    'left': Math.max(0, xActual)+'px'
   })
   //Hide element and set up fadeIn, wait, fadeOut
   //Add Effect: FadeIn, FadeOut, Remove Self
@@ -88,12 +104,15 @@ function addNewImageMessage(data) {
 
 function addNewTextMessage(data) {
   var newTextMessage = $('<div>');
+
+  var yActual = (data.ypos * $(document).height()) - 16;
+  var xActual = (data.xpos * $(document).width()) - 100; //temp hard code offsets
   //Add text, class, custom css
   newTextMessage.text(data.text);
   newTextMessage.addClass('txt-msg');
   newTextMessage.css({
-    'top': Math.max(0, data.ypos-16)+'px',
-    'left': Math.max(0, data.xpos-100)+'px'
+    'top': Math.max(0, yActual)+'px',
+    'left': Math.max(0, xActual)+'px'
   });
   //Add Effect: FadeIn, FadeOut, Remove Self
   addEtherealEffect(newTextMessage);
