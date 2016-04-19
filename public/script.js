@@ -8,6 +8,7 @@ mY = false;
 $('form').submit(function(){
   
   var msg = $('#m').val();
+  //If no click or no msg return
   if(!mX || !mY || (msg.length <1))
     return false;
   if (msg.substring(0,4)=="img:") {
@@ -32,6 +33,7 @@ $('form').submit(function(){
   $('#m').val('');
   mX = false;
   mY = false;
+  $('#m').prop('disabled', true);
   //Set css to not ready
   $('#send-btn').removeClass('btn-ready');
   $('#send-btn').addClass('btn-notready');
@@ -61,6 +63,7 @@ $(document).on('click touch', function(e) {
     mY = (e.pageY/$(document).height()).toFixed(5);
 
     $('#send-btn').addClass('btn-ready');
+    $('#m').prop('disabled', false);
     $('#m').focus();
   }
   
