@@ -97,10 +97,10 @@ function addNewImageMessage(data) {
     'left': Math.max(0, xActual)+'px'
   })
   //Hide element and set up fadeIn, wait, fadeOut
-  //Add Effect: FadeIn, FadeOut, Remove Self
-  addEtherealEffect(newImageMessage);
   //Add image to container
   newImageMessageContainer.append(newImageMessage);
+  //Add Effect: FadeIn, FadeOut, Remove Self
+  addEtherealEffect(newImageMessageContainer);
   //Add container to body
   $('body').append(newImageMessageContainer);
 }
