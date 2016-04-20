@@ -26,5 +26,6 @@ form button {
 	position: absolute;
 }
 .txt-msg {
-	position: absolute;
+	position: fixed;
+	z-index: -1;
 }

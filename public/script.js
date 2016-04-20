@@ -88,14 +88,6 @@ function addNewImageMessage(data) {
   //Add class to it to give common properties
   newImageMessage.addClass('img-msg');
 
-  //Set position 
-  var yActual = (data.ypos * $(document).height())- 100;
-  var xActual = (data.xpos * $(document).width()) - 100; //temp hard code offsets
-
-  newImageMessage.css({
-    'top': Math.max(0, yActual)+'px',
-    'left': Math.max(0, xActual)+'px'
-  })
   //Hide element and set up fadeIn, wait, fadeOut
   //Add image to container
   newImageMessageContainer.append(newImageMessage);
@@ -103,24 +95,77 @@ function addNewImageMessage(data) {
   addEtherealEffect(newImageMessageContainer);
   //Add container to body
   $('body').append(newImageMessageContainer);
+
+  var maxHeight = $(document).height();
+  var maxWidth = $(document).width();
+  //Set position 
+  var yActual = (data.ypos * maxHeight);
+  var xActual = (data.xpos * maxWidth);
+  //Clamp to screen in y direction
+  var imgHeight = newImageMessage.height();
+  if(yActual+ imgHeight> maxHeight) {
+    yActual = maxHeight - imgHeight;
+  }
+  else if(yActual < 0) {
+    yActual = 0;
+  }
+  //Clamp to screen in x direction
+  var imgWidth = newImageMessage.width();
+  if(xActual + imgWidth > maxWidth) {
+    xActual = maxWidth - imgWidth;
+  }
+  else if(xActual < 0) {
+    xActual = 0;
+  }
+
+  newImageMessage.css({
+    'top':  yActual+'px',
+    'left': xActual+'px'
+  })
 }
 
 function addNewTextMessage(data) {
   var newTextMessage = $('<div>');
 
-  var yActual = (data.ypos * $(document).height()) - 16;
-  var xActual = (data.xpos * $(document).width()) - 100; //temp hard code offsets
   //Add text, class, custom css
   newTextMessage.text(data.text);
   newTextMessage.addClass('txt-msg');
-  newTextMessage.css({
-    'top': Math.max(0, yActual)+'px',
-    'left': Math.max(0, xActual)+'px'
-  });
+
   //Add Effect: FadeIn, FadeOut, Remove Self
   addEtherealEffect(newTextMessage);
+
   //Add message to body
-  $('body').append(newTextMessage);
+  $('body').append(newTextMessage); 
+
+  var maxHeight = $(document).height();
+  var maxWidth = $(document).width();
+
+  //Create x and y position based on json
+  var yActual = (data.ypos * maxHeight);
+  var xActual = (data.xpos * maxWidth); 
+
+  //Clamp to screen in y direction
+  var txtHeight = newTextMessage.height();
+  if(yActual+ txtHeight> maxHeight) {
+    yActual = maxHeight - txtHeight;
+  }
+  else if(yActual < 0) {
+    yActual = 0;
+  }
+
+  //Clamp to screen in x direction
+  var txtWidth = newTextMessage.width();
+  if(xActual + txtWidth > maxWidth) {
+    xActual = maxWidth - txtWidth;
+  }
+  else if(xActual < 0) {
+    xActual = 0;
+  }
+
+  newTextMessage.css({
+    'top':  yActual+'px',
+    'left': xActual+'px'
+  });
 }
 
 //Hides element, fadeIn -> wait -> (fadeOut -> remove)
@@ -131,9 +176,9 @@ function addEtherealEffect(element) {
     //Store scope
     var self = this;
     setTimeout(function() {
-      $(self).fadeOut(fadeDur, function() {
+     $(self).fadeOut(fadeDur, function() {
         $(self).remove();
-      })
+     })
     }, stayDur);
   });
 }
