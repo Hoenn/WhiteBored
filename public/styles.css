@@ -2,7 +2,7 @@
   margin: 0; padding: 0; box-sizing: border-box; 
 }
 h1 { 
-  color: #f0f0f0;
+  color: #C0C0C0;
 }
 body { 
   font: 13px Helvetica, Arial; 
@@ -11,16 +11,10 @@ form {
   background: #0f0f0f; padding: 3px; position: fixed; bottom: 0; width: 100%; 
 }
 form input { 
-  border: 0; padding: 10px; width: 90%; margin-right: .5%; 
+  border: 0; padding: 10px; width: 100%;  
 }
 form button { 
   width: 9%; border: none; padding: 10px; 
-}
-.btn-notready {
-   width: 9%; background: rgb(130, 159, 200); border: none; padding: 10px; 
-}
-.btn-ready {
-  background: rgb(130, 244, 255);
 }
 .img-msg {
 	position: absolute;

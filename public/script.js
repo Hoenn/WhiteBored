@@ -2,6 +2,8 @@ var socket = io();
 
 socket.emit('add user', '');
 
+$('#userForm').hide();
+
 mX = false;
 mY = false;
 //Listen to submit and generate message
@@ -35,8 +37,8 @@ $('form').submit(function(){
   mY = false;
   $('#m').prop('disabled', true);
   //Set css to not ready
-  $('#send-btn').removeClass('btn-ready');
-  $('#send-btn').addClass('btn-notready');
+  $('#userForm').hide();
+
   return false;
   
 });
@@ -62,7 +64,7 @@ $(document).on('click touch', function(e) {
     mX = (e.pageX/$(document).width()).toFixed(5);
     mY = (e.pageY/$(document).height()).toFixed(5);
 
-    $('#send-btn').addClass('btn-ready');
+    $('#userForm').show();
     $('#m').prop('disabled', false);
     $('#m').focus();
   }
