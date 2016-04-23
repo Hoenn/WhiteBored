@@ -1,9 +1,6 @@
 * { 
   margin: 0; padding: 0; box-sizing: border-box; 
 }
-h1 { 
-  color: #C0C0C0;
-}
 body { 
   font: 13px Helvetica, Arial; 
 }
@@ -16,10 +13,25 @@ form input {
 form button { 
   width: 9%; border: none; padding: 10px; 
 }
+.bg-text {
+  color: #F0F0F0;
+  cursor: default;
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+}
+#logo {
+  font-size: 64px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
 .img-msg {
 	position: absolute;
 }
 .txt-msg {
-	position: fixed;
-	z-index: -1;
+	position:fixed ;
 }
