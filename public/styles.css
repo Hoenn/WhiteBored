@@ -1,20 +1,30 @@
 * { 
-  margin: 0; padding: 0; box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
 }
 body { 
   font: 13px Helvetica, Arial; 
 }
 form { 
-  background: #0f0f0f; padding: 3px; position: fixed; bottom: 0; width: 100%; 
+  background: #0f0f0f; 
+  padding: 3px; 
+  position: fixed; 
+  bottom: 0; 
+  width: 100%; 
 }
 form input { 
-  border: 0; padding: 10px; width: 100%;  
+  border: 0; 
+  padding: 10px; 
+  width: 100%;  
 }
 form button { 
-  width: 9%; border: none; padding: 10px; 
+  width: 9%; 
+  border: none; 
+  padding: 10px; 
 }
 .bg-text {
-  color: #F0F0F0;
+  color: #f0f0f0;
   cursor: default;
   user-select: none;
   -moz-user-select: none;
@@ -33,5 +43,5 @@ form button {
 	position: absolute;
 }
 .txt-msg {
-	position:fixed ;
+	position: fixed;
 }
