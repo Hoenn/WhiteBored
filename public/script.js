@@ -38,7 +38,7 @@ $('form').submit(function(){
   $('#m').prop('disabled', true);
   //Set css to not ready
   $('#userForm').hide();
-
+  $(currentCursor).hide();
   return false;
   
 });
@@ -58,15 +58,29 @@ socket.on('users changed', function(numUsers){
   $('#userCount').text("Users: "+numUsers);
 });
 
+//Create global cursor object for client
+var currentCursor = $('<div>');
+currentCursor.append('<i class="fa fa-circle-o" aria-hidden="true"></i>');
+currentCursor.addClass('txt-msg');  
+$('body').append(currentCursor); 
+currentCursor.hide();
+
+
 $(document).on('click touch', function(e) {
   //Ensure we only modify when event has mouse coordinates
   if(e.pageX || e.pageY) {
     mX = (e.pageX/$(document).width()).toFixed(5);
     mY = (e.pageY/$(document).height()).toFixed(5);
 
-    $('#userForm').show();
-    $('#m').prop('disabled', false);
-    $('#m').focus();
+  currentCursor.css({
+    'top':  e.pageY+'px',
+    'left':  e.pageX+'px'
+  });
+  currentCursor.show();
+
+  $('#userForm').show();
+  $('#m').prop('disabled', false);
+  $('#m').focus();
   }
   
 });
