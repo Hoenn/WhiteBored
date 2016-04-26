@@ -32,6 +32,9 @@ form button {
   -webkit-user-select: none;
   -o-user-select: none;
 }
+#cursor {
+  color: #3d3d3d;
+}
 #logo {
   font-size: 64px;
   position: absolute;

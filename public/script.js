@@ -60,7 +60,7 @@ socket.on('users changed', function(numUsers){
 
 //Create global cursor object for client
 var currentCursor = $('<div>');
-currentCursor.append('<i class="fa fa-circle-o" aria-hidden="true"></i>');
+currentCursor.append('<i id="cursor" class="fa fa-comment" aria-hidden="true"></i>');
 currentCursor.addClass('txt-msg');  
 $('body').append(currentCursor); 
 currentCursor.hide();
