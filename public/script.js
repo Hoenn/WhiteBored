@@ -20,13 +20,32 @@ $('form').submit(function(){
     src: msg,
     ypos: mY,
     xpos: mX
-  });
-
-
+    });
+  }
+  else if(msg.substring(0,1)=='#'){
+    var color = msg.substring(0,7);
+    var isOk  = /^#[0-9A-F]{6}$/i.test(color);
+    if(isOk) {
+      socket.emit('new message', {
+        text: $('#m').val().slice(7),
+        color: color,
+        ypos: mY,
+        xpos: mX
+      });
+    }
+    else {
+      socket.emit('new message', {
+        text: $('#m').val(),
+        color: '#000',
+        ypos: mY,
+        xpos: mX
+      });
+    }
   }
   else {
     socket.emit('new message', {
       text: $('#m').val(),
+      color: '#000',
       ypos: mY,
       xpos: mX
     });
@@ -180,7 +199,8 @@ function addNewTextMessage(data) {
 
   newTextMessage.css({
     'top':  yActual+'px',
-    'left': xActual+'px'
+    'left': xActual+'px',
+    'color': data.color
   });
 }
 
