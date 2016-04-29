@@ -2,10 +2,24 @@ var socket = io();
 
 socket.emit('add user', '');
 
+//Immediately hide input field
 $('#userForm').hide();
 
-mX = false;
-mY = false;
+socket.on('new message', function(data){
+  console.log(data);
+  if(data.hasOwnProperty('src')){
+    addNewImageMessage(data);
+  }
+  else {
+    addNewTextMessage(data);
+  }
+  
+});
+
+socket.on('users changed', function(numUsers){
+  $('#userCount').text("Users: "+numUsers);
+});
+
 //Listen to submit and generate message
 $('form').submit(function(){
   
@@ -59,22 +73,7 @@ $('form').submit(function(){
   $('#userForm').hide();
   $(currentCursor).hide();
   return false;
-  
-});
 
-socket.on('new message', function(data){
-  console.log(data);
-  if(data.hasOwnProperty('src')){
-    addNewImageMessage(data);
-  }
-  else {
-    addNewTextMessage(data);
-  }
-  
-});
-
-socket.on('users changed', function(numUsers){
-  $('#userCount').text("Users: "+numUsers);
 });
 
 //Create global cursor object for client
@@ -91,26 +90,17 @@ $(document).on('click touch', function(e) {
     mX = (e.pageX/$(document).width()).toFixed(5);
     mY = (e.pageY/$(document).height()).toFixed(5);
 
-  currentCursor.css({
-    'top':  e.pageY+'px',
-    'left':  e.pageX+'px'
-  });
-  currentCursor.show();
+    currentCursor.css({
+      'top':  e.pageY+'px',
+      'left':  e.pageX+'px'
+    });
+    currentCursor.show();
 
-  $('#userForm').show();
-  $('#m').prop('disabled', false);
-  $('#m').focus();
+    $('#userForm').show();
+    $('#m').prop('disabled', false);
+    $('#m').focus();
   }
-  
 });
-
-function randomY(){
-  return Math.random().toFixed(5);
-}
-
-function randomX() {
-  return Math.random().toFixed(5);
-}
 
 function addNewImageMessage(data) {
   var newImageMessageContainer = $('<div>');
@@ -156,7 +146,7 @@ function addNewImageMessage(data) {
   newImageMessage.css({
     'top':  yActual+'px',
     'left': xActual+'px'
-  })
+  });
 }
 
 function addNewTextMessage(data) {

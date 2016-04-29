@@ -1,7 +1,7 @@
 {
   "name": "white-bored",
   "version": "0.0.1",
-  "description": "my second attempt at socket",
+  "description": "anonymous chat application",
   "dependencies": {
     "express": "^4.10.2",
     "socket.io": "^1.4.5"
