@@ -6,3 +6,4 @@ User should spawn invisible input when
 clicking on screen
 
 Heroku can be used to host online
+https://howtonode.org/deploy-blog-to-heroku
