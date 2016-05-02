@@ -18,11 +18,12 @@ socket.on('new message', function(data){
 
 socket.on('users changed', function(numUsers){
   $('#userCount').text("Users: "+numUsers)
+  //User count flashes when changes
   $('#userCount').animate({
     color: '#000'
   }, 500).animate({
     color: '#f0f0f0'
-  },500);
+  }, 500);
 });
 
 //Listen to submit and generate message
@@ -43,8 +44,8 @@ $('form').submit(function(){
   }
   else if(msg.substring(0,1)=='#'){
     var color = msg.substring(0,7);
-    var isOk  = /^#[0-9A-F]{6}$/i.test(color);
-    if(isOk) {
+    var isValidHex  = /^#[0-9A-F]{6}$/i.test(color);
+    if(isValidHex) {
       socket.emit('new message', {
         text: $('#m').val().slice(7),
         color: color,
