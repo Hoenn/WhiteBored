@@ -19,7 +19,7 @@ socket.on('new message', function(data){
 socket.on('users changed', function(numUsers){
   $('#userCount').text("Users: "+numUsers)
   //User count flashes when changes
-  $('#userCount').animate({
+  $('#userCount').finish().animate({
     color: '#000'
   }, 500).animate({
     color: '#f0f0f0'
