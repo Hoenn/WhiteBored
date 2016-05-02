@@ -17,7 +17,12 @@ socket.on('new message', function(data){
 });
 
 socket.on('users changed', function(numUsers){
-  $('#userCount').text("Users: "+numUsers);
+  $('#userCount').text("Users: "+numUsers)
+  $('#userCount').animate({
+    color: '#000'
+  }, 500).animate({
+    color: '#f0f0f0'
+  },500);
 });
 
 //Listen to submit and generate message
