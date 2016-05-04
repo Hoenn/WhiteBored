@@ -18,12 +18,15 @@ socket.on('new message', function(data){
 
 socket.on('users changed', function(numUsers){
   $('#userCount').text("Users: "+numUsers)
-  //User count flashes when changes
+
+  var duration = 500;
+  //Make user count flash when it changes
+  //Interrupt current animation and start new
   $('#userCount').finish().animate({
     color: '#000'
-  }, 500).animate({
-    color: '#f0f0f0'
-  }, 500);
+  }, duration).animate({
+    color: '#f0f0f0' //default background color
+  }, duration);
 });
 
 //Listen to submit and generate message
