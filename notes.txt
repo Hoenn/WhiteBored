@@ -1,9 +1,5 @@
 Put this in address bar when testing
 http://localhost:3000/
 
-UI needs to be updated to be minimalistic,
-User should spawn invisible input when 
-clicking on screen
-
 Heroku can be used to host online
 https://howtonode.org/deploy-blog-to-heroku

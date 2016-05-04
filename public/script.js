@@ -45,12 +45,12 @@ $('form').submit(function(){
     xpos: mX
     });
   }
-  else if(msg.substring(0,1)=='#'){
+  else if(msg.substring(0,1)=='#' && msg.substring(7,8)==":"){
     var color = msg.substring(0,7);
     var isValidHex  = /^#[0-9A-F]{6}$/i.test(color);
     if(isValidHex) {
       socket.emit('new message', {
-        text: $('#m').val().slice(7),
+        text: $('#m').val().slice(8),
         color: color,
         ypos: mY,
         xpos: mX
