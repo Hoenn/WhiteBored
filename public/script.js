@@ -36,43 +36,32 @@ $('form').submit(function(){
   //If no click or no msg return
   if(!mX || !mY || (msg.length <1))
     return false;
+  //JSON Object containing message data to send to other clients
+  var data = {};
   if (msg.substring(0,4)=="img:") {
     msg = msg.substring(4);
-    socket.emit('new message', {
-    text: $('#m').val(),
-    src: msg,
-    ypos: mY,
-    xpos: mX
-    });
+    data['text'] = $('#m').val();
+    data['src'] = msg;
   }
   else if(msg.substring(0,1)=='#' && msg.substring(7,8)==":"){
     var color = msg.substring(0,7);
     var isValidHex  = /^#[0-9A-F]{6}$/i.test(color);
-    if(isValidHex) {
-      socket.emit('new message', {
-        text: $('#m').val().slice(8),
-        color: color,
-        ypos: mY,
-        xpos: mX
-      });
+    if(isValidHex) {  
+      data['text'] = $('#m').val().slice(8);
+      data['color'] = color;  
     }
     else {
-      socket.emit('new message', {
-        text: $('#m').val(),
-        color: '#000',
-        ypos: mY,
-        xpos: mX
-      });
+      data['text'] = $('#m').val();
+      data['color'] = '#000';
     }
   }
   else {
-    socket.emit('new message', {
-      text: $('#m').val(),
-      color: '#000',
-      ypos: mY,
-      xpos: mX
-    });
+    data['text'] = $('#m').val();
+    data['color'] = '#000';
   }
+  data['xpos'] = mX;
+  data['ypos'] = mY;
+  socket.emit('new message', data);
   //Clear input
   $('#m').val('');
   mX = false;
