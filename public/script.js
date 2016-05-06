@@ -37,44 +37,48 @@ $('form').submit(function(){
   if(!mX || !mY || (msg.length <1))
     return false;
   //JSON Object containing message data to send to other clients
-  var data = {};
+  var msgData = {};
   if (msg.substring(0,4)=="img:") {
     msg = msg.substring(4);
-    data['text'] = $('#m').val();
-    data['src'] = msg;
+    msgData['text'] = $('#m').val();
+    msgData['src'] = msg;
   }
   else if(msg.substring(0,1)=='#' && msg.substring(7,8)==":"){
     var color = msg.substring(0,7);
     var isValidHex  = /^#[0-9A-F]{6}$/i.test(color);
     if(isValidHex) {  
-      data['text'] = $('#m').val().slice(8);
-      data['color'] = color;  
+      msgData['text'] = $('#m').val().slice(8);
+      msgData['color'] = color;  
     }
     else {
-      data['text'] = $('#m').val();
-      data['color'] = '#000';
+      msgData['text'] = $('#m').val();
+      msgData['color'] = '#000';
     }
   }
   else {
-    data['text'] = $('#m').val();
-    data['color'] = '#000';
+    msgData['text'] = $('#m').val();
+    msgData['color'] = '#000';
   }
-  data['xpos'] = mX;
-  data['ypos'] = mY;
-  socket.emit('new message', data);
+  
+  //Emit message to other clients
+  msgData['xpos'] = mX;
+  msgData['ypos'] = mY;
+  socket.emit('new message', msgData);
+
   //Clear input
   $('#m').val('');
   mX = false;
   mY = false;
-  $('#m').prop('disabled', true);
-  //Set css to not ready
+  //Set css to unready
   $('#userForm').hide();
   $(currentCursor).hide();
+    $('#m').prop('disabled', true);
+
   return false;
 
 });
 
-//Create global cursor object for client
+//Create global cursor object for client then hide
 var currentCursor = $('<div>');
 currentCursor.append('<i id="cursor" class="fa fa-comment" aria-hidden="true"></i>');
 currentCursor.addClass('txt-msg');  
@@ -94,6 +98,7 @@ $(document).on('click touch', function(e) {
     });
     currentCursor.show();
 
+    //Enable message box and focus
     $('#userForm').show();
     $('#m').prop('disabled', false);
     $('#m').focus();
@@ -185,6 +190,7 @@ function addNewTextMessage(data) {
     xActual = 0;
   }
 
+  //Set position and color (default black)
   newTextMessage.css({
     'top':  yActual+'px',
     'left': xActual+'px',
@@ -193,7 +199,7 @@ function addNewTextMessage(data) {
 }
 
 //Hides element, fadeIn -> wait -> (fadeOut -> remove)
-var fadeDur = 500;
+var fadeDur = 250;
 var stayDur = 1000;
 function addEtherealEffect(element) {
   element.hide().fadeIn(fadeDur, function() {
