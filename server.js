@@ -1,7 +1,8 @@
-var app = require('express')();
-var express = require('express');
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+
+var express = require('express'),
+    app = express(),
+    http = require('http').createServer(app),
+    io = require('socket.io').listen(http)
 
 //Routing
 app.use(express.static(__dirname + '/public'));
@@ -29,7 +30,7 @@ io.on('connection', function(socket){
   });
 });
 
-http.listen(3000, function(){
+http.listen(process.env.PORT||3000, function(){
   console.log('listening on *:3000');
 });
 
