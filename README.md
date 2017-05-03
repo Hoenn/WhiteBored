@@ -1,7 +1,7 @@
 # WhiteBored
 A chat application made with [socket.io](http://socket.io/) and [express](https://expressjs.com)
 
-![screenshot](https://github.com/hoenn/white-bored/scrnshot.png)
+![screenshot](https://github.com/Hoenn/WhiteBored/blob/master/scrnshot.png)
 
 ## Install and Usage
 
