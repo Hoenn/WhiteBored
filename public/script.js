@@ -6,7 +6,6 @@ socket.emit('add user', '');
 $('#userForm').hide();
 
 socket.on('new message', function(data){
-  console.log(data);
   if(data.hasOwnProperty('src')){
     addNewImageMessage(data);
   }
@@ -200,7 +199,7 @@ function addNewTextMessage(data) {
 
 //Hides element, fadeIn -> wait -> (fadeOut -> remove)
 var fadeDur = 250;
-var stayDur = 1000;
+var stayDur = 5000;
 function addEtherealEffect(element) {
   element.hide().fadeIn(fadeDur, function() {
     //Store scope
