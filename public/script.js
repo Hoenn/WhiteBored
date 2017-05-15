@@ -14,10 +14,10 @@ socket.on('new message', function(data){
   }
   
 });
-
+var userCount;
 socket.on('users changed', function(numUsers){
   $('#userCount').text("Users: "+numUsers)
-
+  userCount = numUsers;
   var duration = 500;
   //Make user count flash when it changes
   //Interrupt current animation and start new
@@ -197,10 +197,19 @@ function addNewTextMessage(data) {
   });
 }
 
+//Determines duration for ethereal effects based on num users
+const maximumDuration = 5000;
+const minimumDuration = 1500;
+const userDecay = 100;
+function calculateDuration(){
+  return Math.max(minimumDuration, maximumDuration - (userDecay * userCount))
+}
+
 //Hides element, fadeIn -> wait -> (fadeOut -> remove)
-var fadeDur = 250;
-var stayDur = 5000;
 function addEtherealEffect(element) {
+  var stayDur = calculateDuration();
+  var fadeDur = stayDur * 0.05
+
   element.hide().fadeIn(fadeDur, function() {
     //Store scope
     var self = this;
