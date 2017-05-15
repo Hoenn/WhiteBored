@@ -50,7 +50,7 @@ $('form').submit(function(){
       msgData['color'] = color;  
     }
     else {
-      msgData['text'] = $('#m').val();
+      msgData['text'] = $('#m').val().slice(8);
       msgData['color'] = '#000';
     }
   }
